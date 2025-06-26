@@ -3,6 +3,14 @@
 <html>
   <body>
 
+     <div class="errors">
+      <% post.errors.each do |attribute, error| %>
+        <p class="error" style="color: orange">
+          <%= attribute %>: <%= error %>
+        </p>
+      <% end%>
+    </div>
+    
     <form method="post" action="/update_post/<%= post.id %>">
 
       <label for="title"> Title</label>
