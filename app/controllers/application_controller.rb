@@ -9,6 +9,12 @@ class ApplicationController < ActionController::Base
     render 'application/list_posts', locals: {posts: posts}
   end 
 
+  def list_comments
+    comments = Comment.all
+
+    render 'application/list_comments', locals: { comments: comments }
+  end 
+
   def show_post
     post    = Post.find(params['id'])
     comment = Comment.new
@@ -53,7 +59,7 @@ class ApplicationController < ActionController::Base
   def delete_comment
     post = Post.find(params['post_id'])
     post.delete_comment(params['comment_id'])
-    
+
     redirect_to "/show_post/#{params['post_id']}"
   end
 

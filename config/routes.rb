@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get '/show_post/:id' => 'application#show_post'
   get '/new_post' => 'application#new_post'
   get  '/edit_post/:id' => 'application#edit_post'
+  get  '/list_comments' => 'application#list_comments'
  
   post '/create_post' => 'application#create_post'
   post '/update_post/:id' => 'application#update_post'
