@@ -106,6 +106,10 @@ class Post
     comment.save
   end
 
+  def delete_comment(comment_id)
+    Comment.find(comment_id).destroy
+  end
+
   def destroy
     connection.execute "DELETE FROM posts WHERE posts.id = ?", id
   end
