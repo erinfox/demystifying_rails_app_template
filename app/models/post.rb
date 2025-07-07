@@ -97,6 +97,15 @@ class Post
     end
   end
 
+  def build_comment(attributes)
+    Comment.new(attributes.merge!('post_id' => id))
+  end
+
+  def create_comment(attributes)
+    comment = build_comment(attributes)
+    comment.save
+  end
+
   def destroy
     connection.execute "DELETE FROM posts WHERE posts.id = ?", id
   end

@@ -10,10 +10,12 @@ class ApplicationController < ActionController::Base
   end 
 
   def show_post
-    post = Post.find(params['id'])
-    
-    render 'application/show_post', locals: { post: post}
-  end 
+    post    = Post.find(params['id'])
+    comment = Comment.new
+    comments = post.comments
+    render "application/show_post",
+      locals: { post: post, comment: comment, comments: comments }
+  end
 
   def new_post
     post = Post.new
@@ -30,6 +32,21 @@ class ApplicationController < ActionController::Base
       redirect_to '/list_posts'
     else
       render 'application/new_post', locals: {post: post}
+    end
+  end
+
+  def create_comment
+    post = Post.find(params['post_id'])
+    comments = post.comments
+    comment  = post.build_comment('body' => params['body'], 'author' => params['author'])
+
+    if comment.save
+      # redirect for success
+      redirect_to "/show_post/#{params['post_id']}"
+    else
+      # render form again with errors for failure
+      render 'application/show_post',
+        locals: { post: post, comment: comment, comments: comments }
     end
   end
 

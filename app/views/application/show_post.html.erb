@@ -19,6 +19,25 @@
       </div>
     </div>
     <br />
+      <div class="errors">
+          <% comment.errors.each do |attribute, error| %>
+            <p class="error" style="color: orange">
+              <%= attribute %>: <%= error %>
+            </p>
+          <% end%>
+      </div>
+      <form method="post" action="/create_comment_for_post/<%= post.id %>">
+          <label for="body">Comment</label>
+          <textarea id="body" name="body"><%= comment.body %></textarea>
+          <br /> <br />
+
+          <label for="author">Name</label>
+          <input id="author" name="author" type="text" value="<%= comment.author %>"/>
+          <br /> <br />
+
+          <input type="submit" value="Add Comment" />
+      </form>
+        <hr />
     <a href="/list_posts">Back to Posts</a>
 
   </body>
