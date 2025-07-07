@@ -11,7 +11,8 @@ class ApplicationController < ActionController::Base
 
   def show_post
     post = Post.find(params['id'])
-    render 'application/show_post', locals: { post: post }
+    
+    render 'application/show_post', locals: { post: post}
   end 
 
   def new_post
