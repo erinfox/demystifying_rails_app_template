@@ -1,4 +1,4 @@
-class Comment
+class Comment < BaseModel
   attr_reader :id, :body, :author, :post_id, :created_at, :errors
 
   def initialize(attributes={})
@@ -31,24 +31,8 @@ class Comment
     true
   end
 
-  def self.all
-    comment_row_hashes = connection.execute("SELECT * FROM comments")
-    comment_row_hashes.map do |comment_row_hash|
-      Comment.new(comment_row_hash)
-    end
-  end
-
   def post
     Post.find(post_id) # This can be accomplished using an existing method
-  end
-
-  def self.find(id)
-      comment_hash = connection.execute("SELECT * FROM comments WHERE comments.id = ? LIMIT 1", id).first
-      Comment.new(comment_hash)
-  end
-
-  def destroy
-    connection.execute "DELETE FROM comments WHERE id = ?", id
   end
 
   def insert

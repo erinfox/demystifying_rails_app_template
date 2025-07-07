@@ -1,4 +1,4 @@
-class Post
+class Post < BaseModel
   attr_reader :id, :title, :body, :author, :created_at, :errors
 
   def initialize(attributes={})
@@ -78,18 +78,6 @@ class Post
     self.class.connection
   end
 
-  def self.find(id)
-    post_hash = connection.execute("SELECT * FROM posts WHERE posts.id = ? LIMIT 1", id).first
-    Post.new(post_hash)
-  end
-
-  def self.all
-    post_hashes = connection.execute("SELECT * FROM posts")
-    post_hashes.map do |post_hash|
-      Post.new(post_hash)
-    end
-  end
-
   def comments
     comment_hashes = connection.execute 'SELECT * FROM comments WHERE comments.post_id = ?', id
     comment_hashes.map do |comment_hash|
@@ -108,9 +96,5 @@ class Post
 
   def delete_comment(comment_id)
     Comment.find(comment_id).destroy
-  end
-
-  def destroy
-    connection.execute "DELETE FROM posts WHERE posts.id = ?", id
   end
 end
